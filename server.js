@@ -25,10 +25,9 @@ server.use(express.json());
 
 apiRouter.use('/auth', authRouter);
 
+server.use('/api', apiRouter);
 server.use('/', (req, res) => {
   res.sendStatus(200);
 });
-
-server.use('/api', apiRouter);
 
 module.exports = server;
