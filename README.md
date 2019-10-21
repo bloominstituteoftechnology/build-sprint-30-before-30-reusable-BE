@@ -13,7 +13,7 @@ const api = axios.create({
 });
 
 api.post('/auth/register', { username: 'goodusername', password: 'goodpassword' })
-  .then(console.log(response.data))
+  .then(response => console.log(response.data))
 ```
 
 ## Authentication
