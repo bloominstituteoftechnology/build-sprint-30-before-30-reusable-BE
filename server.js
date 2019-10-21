@@ -3,6 +3,7 @@ const cors = require('cors');
 const session = require('express-session');
 const KnexSessionStore = require('connect-session-knex')(session);
 const authRouter = require('./routes/auth');
+const listsRouter = require('./routes/lists');
 const sessionStore = new KnexSessionStore({ knex: require('./database') });
 const server = express();
 const apiRouter = express.Router();
@@ -24,10 +25,8 @@ server.use(
 server.use(express.json());
 
 apiRouter.use('/auth', authRouter);
+apiRouter.use('/lists', listsRouter);
 
 server.use('/api', apiRouter);
-server.use('/', (req, res) => {
-  res.sendStatus(200);
-});
 
 module.exports = server;
