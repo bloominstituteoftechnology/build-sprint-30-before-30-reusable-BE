@@ -1,2 +1,2 @@
 release: npx knex migrate:latest
-web: node index.js
+web: npm start
