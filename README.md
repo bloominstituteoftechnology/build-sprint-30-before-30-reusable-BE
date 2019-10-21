@@ -1,5 +1,9 @@
 # BackEnd
 
+https://buildweek30before30.herokuapp.com/api
+
+**You must create an instance of axios with `axios.create` and have the `withCredentials` property set to `true`.**
+
 | Endpoint        | Method | Notes                                                                                                                                                                                                                                                                                                                                                                                                          |
 |-----------------|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |  /auth/register | POST   | Expects `{ username, password }`. <ul>  <li>`201` if registration was successful. <ul><li>Responds with `{ id }`.</li></ul> </li>  <li>`400` if required information is missing. <ul><li>Responds with `{ message }`.</li></ul>  </li>  <li>`409` if the username is already taken. <ul><li>Responds with `{ message }`.</li></ul> </li>  </ul>                                                                |
