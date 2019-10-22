@@ -14,7 +14,14 @@ router.post('/', [sessionAuth], (req, res) => {
     .insert({ name, description, deadline, user_id: req.session.user.id })
     .then(data => {
       const [id] = data;
-      res.status(201).json({ id });
+
+      database('lists')
+        .join('users', 'users.id', 'lists.user_id')
+        .select('lists.*', 'users.username as created_by')
+        .where('lists.id', id)
+        .first()
+        .then(list => res.status(201).send(list))
+        .catch(error => res.status(500).send(error));
     })
     .catch(error => res.status(500).send(error));
 });
@@ -22,7 +29,7 @@ router.post('/', [sessionAuth], (req, res) => {
 router.get('/', [sessionAuth], (req, res) => {
   database('lists')
     .join('users', 'users.id', 'lists.user_id')
-    .select('lists.*', 'users.username as createdBy')
+    .select('lists.*', 'users.username as created_by')
     .then(lists => res.send(lists))
     .catch(error => res.status(500).send(error));
 });
@@ -30,7 +37,7 @@ router.get('/', [sessionAuth], (req, res) => {
 router.get('/:id', [sessionAuth], (req, res) => {
   database('lists')
     .join('users', 'users.id', 'lists.user_id')
-    .select('lists.*', 'users.username as createdBy')
+    .select('lists.*', 'users.username as created_by')
     .where('lists.id', req.params.id)
     .first()
     .then(list => {
@@ -39,6 +46,28 @@ router.get('/:id', [sessionAuth], (req, res) => {
       };
 
       res.send(list);
+    })
+    .catch(error => res.status(500).send(error));
+});
+
+router.put('/:id', [sessionAuth], (req, res) => {
+  database('lists')
+    .update({ name, description, deadline } = req.body, 'id')
+    .where({ id: req.params.id })
+    .then(data => {
+      const [id] = data;
+
+      if (!id) {
+        return res.status(404).json({ message: 'The specified list could not be found.' });
+      };
+
+      database('lists')
+        .join('users', 'users.id', 'lists.user_id')
+        .select('lists.*', 'users.username as created_by')
+        .where('lists.id', id)
+        .first()
+        .then(list => res.status(201).send(list))
+        .catch(error => res.status(500).send(error));
     })
     .catch(error => res.status(500).send(error));
 });
