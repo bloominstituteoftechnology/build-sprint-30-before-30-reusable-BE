@@ -30,12 +30,32 @@ api.post('/auth/register', { username: 'goodusername', password: 'goodpassword' 
 
 ```javascript
 {
-  "id": 6,
+  "id": 9,
   "user_id": 1,
   "name": "Cool list",
   "description": "Do it before you die",
   "deadline": null,
-  "created_by": "test"
+  "created_by": "test",
+  "comments": [
+    {
+      "id": 3,
+      "user_id": 1,
+      "content": "Hello worlasdasdd!",
+      "created_by": "test",
+      "created_at": "2019-10-22T21:29:01.718Z",
+      "updated_at": "2019-10-22T21:29:01.718Z"
+    }
+  ],
+  "items": [
+    {
+      "id": 2,
+      "list_id": 9,
+      "name": "Test item",
+      "description": "Test description",
+      "deadline": null,
+      "completed": false
+    }
+  ]
 }
 ```
 
