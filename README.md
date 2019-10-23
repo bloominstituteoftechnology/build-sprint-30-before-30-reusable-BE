@@ -35,6 +35,7 @@ api.post('/auth/register', { username: 'goodusername', password: 'goodpassword' 
   "name": "Cool list",
   "description": "Do it before you die",
   "deadline": null,
+  "private": true,
   "created_by": "test",
   "comments": [
     {
