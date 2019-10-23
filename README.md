@@ -39,6 +39,19 @@ api.post('/auth/register', { username: 'goodusername', password: 'goodpassword' 
 }
 ```
 
+#### Example Item
+
+```javascript
+{
+  "id": 3,
+  "list_id": 9,
+  "name": "Test item",
+  "description": "Test description",
+  "deadline": null,
+  "completed": false
+}
+```
+
 | Endpoint   | Method | Notes                                                                                                                                                                                                                                                                                                                |
 |------------|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | /lists     | GET    | <ul>  <li> <code>200</code> with an array of all lists.  </li>  </ul>                                                                                                                                                                                                                                                |
@@ -46,3 +59,8 @@ api.post('/auth/register', { username: 'goodusername', password: 'goodpassword' 
 | /lists/:id | PUT    | <ul>  <li>  <code>200</code> if the list with the specified <code>id</code> was updated. <ul><li>Responds with the updated list.</li></ul>  </li>  <li> <code>404</code> if the list with the specified <code>id</code> could not be found. <ul><li>Responds with <code>{ message } </code>.</li></ul>  </li>  </ul> |
 | /lists/:id | GET    | <ul>  <li>  <code>200</code> if the list with the specified <code>id</code> was found. <ul><li>Responds with the list.</li></ul>  </li>  <li> <code>404</code> if the list with the specified <code>id</code> could not be found. <ul><li>Responds with <code>{ message } </code>.</li></ul>  </li>  </ul>           |
 | /lists/:id | DELETE | <ul> <li> <code>204</code> if the list with the specified <code>id</code> was deleted. </li>  <li> <code>404</code> if the list with the specified <code>id</code> could not be found. <ul><li>Responds with <code>{ message } </code>.</li></ul> </li>  </ul>                                                       |
+| /lists/:id/items     | POST   |  Expects `{ name, description, completed, deadline (optional) }`.   <ul>  <li>  <code>201</code> if the item was created. <ul><li>Responds with the new item.</li></ul>  </li>  <li> <code>404</code> if the list with the specified <code>id</code> could not be found. <ul><li>Responds with <code>{ message } </code>.</li></ul>  </li>  </ul>    |
+| /lists/items/:itemId | DELETE | <ul>  <li>  <code>204</code> if the item was deleted.  </li>  <li> <code>404</code> if the item with the specified <code>itemId</code> could not be found. <ul><li>Responds with <code>{ message } </code>.</li></ul>  </li>  </ul>                                                                                                                  |
+| /lists/items/:itemId | PUT    | Expects `{ name, description, completed, deadline (optional) }`.   <ul>  <li>  <code>200</code> if the item was updated. <ul><li>Responds with the new item.</li></ul>  </li>  <li> <code>404</code> if the item with the specified <code>itemId</code> could not be found. <ul><li>Responds with <code>{ message } </code>.</li></ul>  </li>  </ul> |
+|                      |        |                                                                                                                                                                                                                                                                                                                                                      |
+|                      |        |                                                                                                                                                                                                                                                                                                                                                      |
