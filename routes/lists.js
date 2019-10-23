@@ -45,7 +45,27 @@ router.get('/:id', [sessionAuth], (req, res) => {
         return res.status(404).json({ message: 'The specified list could not be found.' });
       };
 
-      res.send(list);
+      database('list_comments')
+        .join('users', 'users.id', 'list_comments.user_id')
+        .select('list_comments.id',
+          'users.id as user_id',
+          'list_comments.content',
+          'users.username as created_by',
+          'list_comments.created_at',
+          'list_comments.updated_at')
+        .where({ list_id: list.id })
+        .then(comments => {
+          list.comments = comments;
+
+          database('list_items')
+            .where({ list_id: list.id })
+            .then(items => {
+              list.items = items;
+              res.send(list);
+            })
+            .catch(error => res.status(500).send(error));
+        })
+        .catch(error => res.status(500).send(error));
     })
     .catch(error => res.status(500).send(error));
 });
@@ -82,6 +102,94 @@ router.delete('/:id', [sessionAuth], (req, res) => {
       };
 
       res.sendStatus(204);
+    })
+    .catch(error => res.status(500).send(error));
+});
+
+router.post('/:id/comments', [sessionAuth], (req, res) => {
+  if (!req.body.content) {
+    return res.status(400).json({ message: 'You must specify the content for the comment.' });
+  };
+
+  database('lists')
+    .where({ id: req.params.id })
+    .first()
+    .then(list => {
+      if (!list) {
+        return res.status(404).json({ message: 'The specified list could not be found.' });
+      };
+
+      database('list_comments')
+        .returning('*')
+        .insert({ list_id: list.id, user_id: req.session.user.id, content: req.body.content })
+        .then(comment => {
+          res.status(201).send(comment);
+        })
+        .catch(error => res.status(500).send(error));
+    })
+    .catch(error => res.status(500).send(error));
+});
+
+router.delete('/comments/:commentId', [sessionAuth], (req, res) => {
+  database('list_comments')
+    .where({ id: req.params.commentId })
+    .del()
+    .then(rows => {
+      if (!rows) {
+        return res.status(404).json({ message: 'The specified comment could not be found.' });
+      };
+
+      res.sendStatus(204);
+    })
+    .catch(error => res.status(500).send(error));
+});
+
+router.post('/:id/items', [sessionAuth], (req, res) => {
+  if (!req.body.name || !req.body.description) {
+    return res.status(400).json({ message: 'You must provide a name and description.' });
+  };
+
+  database('lists')
+    .where('lists.id', req.params.id)
+    .first()
+    .then(list => {
+      if (!list) {
+        return res.status(404).json({ message: 'The specified list could not be found.' });
+      };
+
+      database('list_items')
+        .returning('*')
+        .insert({ list_id: list.id, name: req.body.name, description: req.body.description })
+        .then(item => res.status(201).send(item[0]))
+        .catch(error => res.status(500).send(error));
+    })
+    .catch(error => res.status(500).send(error));
+});
+
+router.delete('/items/:itemId', [sessionAuth], (req, res) => {
+  database('list_items')
+    .where({ id: req.params.itemId })
+    .del()
+    .then(rows => {
+      if (!rows) {
+        return res.status(404).json({ message: 'The specified item could not be found.' });
+      };
+
+      res.sendStatus(204);
+    })
+    .catch(error => res.status(500).send(error));
+});
+
+router.put('/items/:itemId', [sessionAuth], (req, res) => {
+  database('list_items')
+    .update({ name, description, deadline, completed } = req.body, '*')
+    .where({ id: req.params.itemId })
+    .then(data => {
+      if (!data) {
+        return res.status(404).json({ message: 'The specified item could not be found.' });
+      };
+
+      res.send(data);
     })
     .catch(error => res.status(500).send(error));
 });
