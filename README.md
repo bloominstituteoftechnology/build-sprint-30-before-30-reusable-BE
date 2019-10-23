@@ -52,6 +52,20 @@ api.post('/auth/register', { username: 'goodusername', password: 'goodpassword' 
 }
 ```
 
+
+#### Example Comment
+
+```javascript
+{
+  "id": 3,
+  "user_id": 1,
+  "content": "Hello worlasdasdd!",
+  "created_by": "test",
+  "created_at": "2019-10-22T21:29:01.718Z",
+  "updated_at": "2019-10-22T21:29:01.718Z"
+}
+```
+
 | Endpoint   | Method | Notes                                                                                                                                                                                                                                                                                                                |
 |------------|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | /lists     | GET    | <ul>  <li> <code>200</code> with an array of all lists.  </li>  </ul>                                                                                                                                                                                                                                                |
@@ -62,5 +76,8 @@ api.post('/auth/register', { username: 'goodusername', password: 'goodpassword' 
 | /lists/:id/items     | POST   |  Expects `{ name, description, completed, deadline (optional) }`.   <ul>  <li>  <code>201</code> if the item was created. <ul><li>Responds with the new item.</li></ul>  </li>  <li> <code>404</code> if the list with the specified <code>id</code> could not be found. <ul><li>Responds with <code>{ message } </code>.</li></ul>  </li>  </ul>    |
 | /lists/items/:itemId | DELETE | <ul>  <li>  <code>204</code> if the item was deleted.  </li>  <li> <code>404</code> if the item with the specified <code>itemId</code> could not be found. <ul><li>Responds with <code>{ message } </code>.</li></ul>  </li>  </ul>                                                                                                                  |
 | /lists/items/:itemId | PUT    | Expects `{ name, description, completed, deadline (optional) }`.   <ul>  <li>  <code>200</code> if the item was updated. <ul><li>Responds with the new item.</li></ul>  </li>  <li> <code>404</code> if the item with the specified <code>itemId</code> could not be found. <ul><li>Responds with <code>{ message } </code>.</li></ul>  </li>  </ul> |
-|                      |        |                                                                                                                                                                                                                                                                                                                                                      |
-|                      |        |                                                                                                                                                                                                                                                                                                                                                      |
+|                      |        |                                                             
+| /lists/:id/comments     | POST   |  Expects `{ content }`.   <ul>  <li>  <code>201</code> if the comment was created. <ul><li>Responds with the new comment.</li></ul>  </li>  <li> <code>404</code> if the list with the specified <code>id</code> could not be found. <ul><li>Responds with <code>{ message } </code>.</li></ul>  </li>  </ul>    |
+| /lists/comments/:commentId | DELETE | <ul>  <li>  <code>204</code> if the comment was deleted.  </li>  <li> <code>404</code> if the comment with the specified <code>commentId</code> could not be found. <ul><li>Responds with <code>{ message } </code>.</li></ul>  </li>  </ul>                                                                                                                  |
+| /lists/comments/:commentId | PUT    | Expects `{ content }`.   <ul>  <li>  <code>200</code> if the comment was updated. <ul><li>Responds with the new comment.</li></ul>  </li>  <li> <code>404</code> if the comment with the specified <code>commentId</code> could not be found. <ul><li>Responds with <code>{ message } </code>.</li></ul>  </li>  </ul> |
+|                      |        |                                                                                                                        
