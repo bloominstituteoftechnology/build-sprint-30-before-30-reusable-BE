@@ -50,8 +50,14 @@ router.post('/login', [basicAuth], (req, res) => {
     });
 });
 
-router.get('/secret', [sessionAuth], (req, res) => {
-  res.send(req.session.user)
+router.get('/logout', [sessionAuth], (req, res) => {
+  req.session.destroy(error => {
+    if (error) {
+      return res.status(500).send(error);
+    };
+
+    res.sendStatus(200);
+  });
 });
 
 module.exports = router;
