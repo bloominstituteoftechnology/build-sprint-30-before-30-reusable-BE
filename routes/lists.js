@@ -159,7 +159,7 @@ router.post('/:id/items', [sessionAuth], (req, res) => {
 
       database('list_items')
         .returning('*')
-        .insert({ list_id: list.id, name: req.body.name, description: req.body.description })
+        .insert({ list_id: list.id, name: req.body.name, description: req.body.description, deadline: req.body.deadline })
         .then(item => res.status(201).send(item[0]))
         .catch(error => res.status(500).send(error));
     })
