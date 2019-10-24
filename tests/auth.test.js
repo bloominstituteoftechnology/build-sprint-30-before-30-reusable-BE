@@ -1,17 +1,9 @@
 const request = require('supertest');
 const database = require('../database');
 const server = require('../server');
-const fs = require('fs');
 const knexCleaner = require('knex-cleaner');
 
 beforeEach(async () => {
-  // await database.raw('drop owned by thirty cascade;')
-
-  // const files = fs.readdirSync('./database/migrations');
-  // files.forEach(async file => {
-  //   const migration = require(`../database/migrations/${file}`);
-  //   await migration.up(database);
-  // });
   await knexCleaner.clean(database, {
     mode: 'truncate',
     restartIdentity: true,
