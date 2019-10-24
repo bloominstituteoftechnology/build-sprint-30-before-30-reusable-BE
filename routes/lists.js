@@ -3,7 +3,7 @@ const sessionAuth = require('../middleware/auth/session');
 const database = require('../database');
 
 router.post('/', [sessionAuth], (req, res) => {
-  const { name, description, deadline } = req.body;
+  const { name, description, deadline, is_private } = req.body;
 
   if (!name || !description) {
     return res.status(400).json({ message: 'You must provide a name and description.' });
@@ -11,7 +11,7 @@ router.post('/', [sessionAuth], (req, res) => {
 
   database('lists')
     .returning('id')
-    .insert({ name, description, deadline, user_id: req.session.user.id })
+    .insert({ name, description, deadline, is_private, user_id: req.session.user.id })
     .then(data => {
       const [id] = data;
 
@@ -72,7 +72,7 @@ router.get('/:id', [sessionAuth], (req, res) => {
 
 router.put('/:id', [sessionAuth], (req, res) => {
   database('lists')
-    .update({ name, description, deadline } = req.body, 'id')
+    .update({ name, description, deadline, is_private } = req.body, 'id')
     .where({ id: req.params.id })
     .then(data => {
       const [id] = data;

@@ -19,7 +19,7 @@ router.post('/register', (req, res) => {
       })
       .then(data => res.status(201).send(data))
       .catch(error => {
-        if (error.errno === 19) {
+        if (error.code === '23505') {
           return res.status(409).json({ message: 'That username is already taken.' });
         };
 

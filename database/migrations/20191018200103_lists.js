@@ -5,6 +5,7 @@ exports.up = knex => {
     table.string('name', 255).notNullable();
     table.text('description');
     table.date('deadline');
+    table.boolean('is_private').notNullable().defaultTo(1);
 
     table.foreign('user_id').references('id').inTable('users').onDelete('CASCADE');
   });

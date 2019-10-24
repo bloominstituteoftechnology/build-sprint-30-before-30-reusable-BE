@@ -28,10 +28,10 @@ module.exports = {
       directory: './database/seeds',
     },
     connection: {
-      host: 'salt.db.elephantsql.com',
-      user: 'oiwxvscq',
-      password: 'RKBbWHKifNq2BBZAz1yEieMgvfrrUoRj',
-      database: 'oiwxvscq'
+      host: 'localhost',
+      user: 'thirty',
+      password: 'thirty',
+      database: 'thirty'
     },
   },
   testing: {
@@ -43,10 +43,10 @@ module.exports = {
       directory: './database/seeds',
     },
     connection: {
-      host: 'salt.db.elephantsql.com',
-      user: 'oiwxvscq',
-      password: 'RKBbWHKifNq2BBZAz1yEieMgvfrrUoRj',
-      database: 'oiwxvscq'
+      host: 'localhost',
+      user: 'thirty',
+      password: 'thirty',
+      database: 'thirtytest'
     },
   },
   production: {
