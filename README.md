@@ -1,6 +1,5 @@
 # BackEnd
-
-https://buildweek30before30.herokuapp.com/api
+https://bw-30-before-30.herokuapp.com/
 
 **You must create an instance of axios with `axios.create` and have the `withCredentials` configuration property set to `true`.**
 
